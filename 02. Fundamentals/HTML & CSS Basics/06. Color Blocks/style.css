@@ -1,0 +1,30 @@
+.green { 
+    background-color: green;
+    margin-right: 10;
+    display: inline-block;
+    font-size: 100;
+}
+.blue { 
+    background-color: blue;
+    margin-right: 10;
+    display: inline-block;
+    font-size: 100;
+}
+.red { 
+    background-color: red;
+    margin-right: 10;
+    display: inline-block;
+    font-size: 100;
+}
+.purple { 
+    background-color: purple;
+    margin-right: 10;
+    display: inline-block;
+    font-size: 100;
+}
+.orange { 
+    background-color: orange;
+    margin-right: 10;
+    display: inline-block;
+    font-size: 100;
+}
