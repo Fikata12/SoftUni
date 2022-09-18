@@ -1,9 +1,8 @@
 function func(inputArray) {
     let array = [...inputArray];
     let dashboard = [[false, false, false],
-    [false, false, false],
-    [false, false, false]];
-    ;
+                     [false, false, false],
+                     [false, false, false]];
     let playerSwitch = 'X';
     for (const coordinates of array) {
         let x = Number(coordinates[0]);
