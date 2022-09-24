@@ -14,18 +14,22 @@ namespace Trade_Commissions
                 if (0 <= obem && obem <= 500)
                 {
                     result = 0.05 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (500 <= obem && obem <= 1000)
                 {
                     result = 0.07 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (1000 <= obem && obem <= 10000)
                 {
                     result = 0.08 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (10000 < obem)
                 {
                     result = 0.12 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else
                 {
@@ -37,18 +41,22 @@ namespace Trade_Commissions
                 if (0 <= obem && obem <= 500)
                 {
                     result = 0.045 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (500 <= obem && obem <= 1000)
                 {
                     result = 0.075 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (1000 <= obem && obem <= 10000)
                 {
                     result = 0.10 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (10000 < obem)
                 {
                     result = 0.13 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else
                 {
@@ -60,18 +68,22 @@ namespace Trade_Commissions
                 if (0 <= obem && obem <= 500)
                 {
                     result = 0.055 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (500 <= obem && obem <= 1000)
                 {
                     result = 0.08 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (1000 <= obem && obem <= 10000)
                 {
                     result = 0.12 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else if (10000 < obem)
                 {
                     result = 0.145 * obem;
+                    Console.WriteLine($"{result:f2}");
                 }
                 else
                 {
@@ -82,7 +94,6 @@ namespace Trade_Commissions
             {
                 Console.WriteLine("error");
             }
-            Console.WriteLine($"{result:f2}");
         }
     }
 }
