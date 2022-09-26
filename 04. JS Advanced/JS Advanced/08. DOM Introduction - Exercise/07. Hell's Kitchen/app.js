@@ -3,6 +3,5 @@ function solve() {
 
    function onClick () {
       let input = document.getElementsByTagName('textarea')[0].value.split('", "');
-      
    }
 }
