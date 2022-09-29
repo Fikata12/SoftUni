@@ -2,9 +2,7 @@ function solve() {
    document.querySelector('#btnSend').addEventListener('click', onClick);
 
    function onClick() {
-      let input = document.getElementsByTagName('textarea')[0].value.split('","');
-      input[0] = input[0].substring(2);
-      input[input.length - 1] = input[input.length - 1].substring(0, input[input.length - 1].length - 2);
+      let input = JSON.parse(document.getElementsByTagName('textarea')[0].value);
       let allRestaurants = [];
       for (const item of input) {
          let nameAndWorkers = item.split(' - ');
