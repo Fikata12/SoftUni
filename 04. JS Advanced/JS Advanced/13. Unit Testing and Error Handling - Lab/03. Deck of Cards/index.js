@@ -23,4 +23,4 @@ function printDeckOfCards(cards) {
         }
         throw Error(`Invalid card: ${face + suit}`);
     }
-}
+} 
