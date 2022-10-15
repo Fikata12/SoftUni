@@ -6,9 +6,6 @@ function solve(obj) {
     if (!validMethods.includes(obj['method'])) {
         throw Error("Invalid request header: Invalid Method");
     }
-    let a = obj['uri'] === undefined;
-    let b = obj['uri'] === undefined || !validUri.test(obj['uri']);
-    let c = validUri.test(obj['uri']);
     if (obj['uri'] === undefined || !validUri.test(obj['uri'])) {
         throw Error("Invalid request header: Invalid URI");
     }
