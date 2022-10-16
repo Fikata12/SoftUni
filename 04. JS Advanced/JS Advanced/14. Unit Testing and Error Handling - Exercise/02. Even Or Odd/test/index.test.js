@@ -1,7 +1,6 @@
 const { expect } = require("chai");
 const { isOddOrEven } = require("..");
 describe('Test', () => {
-
     it("should return undefined if input isn't string", () => {
         // Arrange
         let inputs = [1, [], {}];
@@ -14,7 +13,6 @@ describe('Test', () => {
             expect(result).to.be.undefined;
         }
     });
-
     it("should return 'even' if input is string and even", () => {
         // Arrange
         let input = 'Hi';
@@ -25,7 +23,6 @@ describe('Test', () => {
         // Assert
         expect(result).to.equal('even');
     });
-
     it("should return 'odd' if input is string and odd", () => {
         // Arrange
         let input = 'Hii';
@@ -36,5 +33,4 @@ describe('Test', () => {
         // Assert
         expect(result).to.equal('odd');
     });
-
 });
