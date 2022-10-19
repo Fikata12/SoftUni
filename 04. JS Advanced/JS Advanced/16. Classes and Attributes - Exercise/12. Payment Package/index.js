@@ -1,65 +1,65 @@
 class PaymentPackage {
-    constructor(name, value) {// tested
+    constructor(name, value) {
         this.name = name;
         this.value = value;
         this.VAT = 20;      // Default value    
         this.active = true; // Default value
     }
 
-    get name() {// tested
-        return this._name; 
+    get name() {
+        return this._name;
     }
 
-    set name(newValue) { // tested
+    set name(newValue) {
         if (typeof newValue !== 'string') {
             throw new Error('Name must be a non-empty string');
         }
         if (newValue.length === 0) {
             throw new Error('Name must be a non-empty string');
         }
-        this._name = newValue; // tested
+        this._name = newValue;
     }
 
-    get value() {// tested
+    get value() {
         return this._value;
     }
 
-    set value(newValue) { //tested
+    set value(newValue) {
         if (typeof newValue !== 'number') {
             throw new Error('Value must be a non-negative number');
         }
         if (newValue < 0) {
             throw new Error('Value must be a non-negative number');
         }
-        this._value = newValue; // tested
+        this._value = newValue;
     }
 
-    get VAT() { // tested
+    get VAT() {
         return this._VAT;
     }
 
-    set VAT(newValue) { // tested
+    set VAT(newValue) {
         if (typeof newValue !== 'number') {
             throw new Error('VAT must be a non-negative number');
         }
         if (newValue < 0) {
             throw new Error('VAT must be a non-negative number');
         }
-        this._VAT = newValue; // tested
+        this._VAT = newValue;
     }
 
-    get active() { // tested
+    get active() {
         return this._active;
     }
 
-    set active(newValue) { //tested
+    set active(newValue) {
         if (typeof newValue !== 'boolean') {
             throw new Error('Active status must be a boolean');
         }
-        this._active = newValue; // tested
+        this._active = newValue;
     }
 
-    toString() { //tested
+    toString() {
         const output = [
             `Package: ${this.name}` + (this.active === false ? ' (inactive)' : ''),
             `- Value (excl. VAT): ${this.value}`,
