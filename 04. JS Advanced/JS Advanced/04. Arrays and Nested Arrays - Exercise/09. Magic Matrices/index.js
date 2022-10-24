@@ -24,4 +24,4 @@ function func(inputArray) {
     function Sum(array) {
         return array.reduce((total, current) => { return total += current });
     }
-}   
+}
