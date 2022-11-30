@@ -21,7 +21,7 @@ const listOfCatsTemplate = () => html`
 `;
 render(listOfCatsTemplate(), root);
 
-let allButtons = document.getElementsByClassName('showBtn');
+let allButtons = document.getElementsByClassName('showBtn'); 
 for (const button of Array.from(allButtons)) {
     button.addEventListener('click', () => {
         let status = button.parentElement.getElementsByClassName('status')[0];
