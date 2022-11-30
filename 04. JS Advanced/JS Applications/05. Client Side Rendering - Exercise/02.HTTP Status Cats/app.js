@@ -17,7 +17,7 @@ const catTemplate = (cat) => html`
 const listOfCatsTemplate = () => html`
 <ul>
     ${cats.map(catTemplate)}
-</ul>
+</ul> 
 `;
 render(listOfCatsTemplate(), root);
 
