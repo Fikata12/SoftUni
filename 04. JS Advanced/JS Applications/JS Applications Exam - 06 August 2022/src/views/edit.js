@@ -1,6 +1,6 @@
-import { del, get, post, put } from "../api/api.js";
-import { html, nothing } from "../api/lib.js";
-import { createSubmitHandler, getUserData } from "../api/util.js";
+import { get, put } from "../api/api.js";
+import { html } from "../api/lib.js";
+import { createSubmitHandler } from "../api/util.js";
 
 const editTemplate = (offer, onEdit) => html`
         <section id="edit">

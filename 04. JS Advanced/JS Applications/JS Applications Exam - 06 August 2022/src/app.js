@@ -11,9 +11,7 @@ import { showRegister } from "./views/register.js";
 
 const main = document.querySelector('main');
 
-
 page(decorateContext);
-
 page('/', showHome);
 page('/dashboard', showDashboard);
 page('/dashboard/:id', showDetails);
@@ -21,8 +19,8 @@ page('/edit/:id', showEdit);
 page('/create', showCreate);
 page('/login', showLogin);
 page('/register', showRegister);
-
 page.start();
+
 showNav();
 
 function decorateContext(ctx, next) {
