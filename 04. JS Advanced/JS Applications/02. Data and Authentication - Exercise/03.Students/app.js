@@ -1,4 +1,4 @@
-    init();
+init();
 document.getElementById('form').addEventListener('submit', onSubmit);
 
 function onSubmit(e) {
@@ -12,8 +12,8 @@ function onSubmit(e) {
             grade: Number(formData.get('grade'))
         };
         if (!Object.values(data).some(e => e == '')
-        && typeof data.firstName == 'string' && typeof data.lastName == 'string'
-        && typeof data.facultyNumber == 'string' && typeof data.grade == 'number' && !isNaN(data.grade)) {
+            && typeof data.firstName == 'string' && typeof data.lastName == 'string'
+            && typeof data.facultyNumber == 'string' && typeof data.grade == 'number' && !isNaN(data.grade)) {
 
             fetch("http://localhost:3030/jsonstore/collections/students", {
                 method: 'post',
