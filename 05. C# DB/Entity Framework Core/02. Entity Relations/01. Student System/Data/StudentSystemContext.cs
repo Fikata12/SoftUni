@@ -8,6 +8,7 @@ namespace P01_StudentSystem.Data
         public StudentSystemContext(DbContextOptions options) : base(options)
         {
         }
+        public StudentSystemContext() { }
         
         public DbSet<Student> Students { get; set; } = null!;
         public DbSet<Course> Courses { get; set; } = null!;
@@ -19,7 +20,7 @@ namespace P01_StudentSystem.Data
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=SoftUni;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=StudentSystem;Integrated Security=True;");
             }
         }
 
