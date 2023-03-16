@@ -14,9 +14,7 @@
     {
         public static void Main()
         {
-            var context = new MusicHubDbContext();
-            //DbInitializer.ResetDatabase(context);
-            Console.WriteLine(ExportSongsAboveDuration(context, 4));
+
         }
 
         public static string ExportAlbumsInfo(MusicHubDbContext context, int producerId)
