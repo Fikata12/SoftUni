@@ -4,13 +4,15 @@
     using Data;
     using Initializer;
     using System.Globalization;
+    using System.Linq;
     using System.Text;
 
     public class StartUp
     {
         public static void Main()
         {
-
+            BookShopContext context = new BookShopContext();
+            Console.WriteLine(GetBooksByCategory(context, "horror mystery drama"));
         }
 
         // 02. Age Restriction
@@ -72,7 +74,7 @@
         {
             string[] categories = input.ToLower().Split();
             var books = context.Books
-                .Where(b => categories.Contains(b.BookCategories.First().Category.Name.ToLower()))
+                .Where(b => b.BookCategories.Any(bc => categories.Contains(bc.Category.Name.ToLower())))
                 .OrderBy(b => b.Title)
                 .Select(b => b.Title)
                 .ToArray();
