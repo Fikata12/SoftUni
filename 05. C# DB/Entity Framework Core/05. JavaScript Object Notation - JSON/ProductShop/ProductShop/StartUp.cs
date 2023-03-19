@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using ProductShop.Data;
+using ProductShop.DTOs.Export;
 using ProductShop.DTOs.Import;
 using ProductShop.Models;
 
@@ -17,11 +20,11 @@ namespace ProductShop
         {
             ProductShopContext context = new ProductShopContext();
 
-            context.Database.EnsureDeleted();
-            context.Database.EnsureCreated();
+            // context.Database.EnsureDeleted();
+            // context.Database.EnsureCreated();
 
-            string inputJson = File.ReadAllText("../../../Datasets/categories.json");
-            Console.WriteLine(ImportCategories(context, inputJson));
+            string inputJson = File.ReadAllText("../../../Datasets/categories-products.json");
+            Console.WriteLine(GetProductsInRange(context));
 
         }
 
@@ -84,12 +87,39 @@ namespace ProductShop
         {
             var categoryProducts = JsonConvert.DeserializeObject<ImportCategoryProductDto[]>(inputJson)!;
 
-            ICollection<CategoryProduct> categoryProductsToAdd = mapper.Map<CategoryProduct[]>(categoryProducts);
+            ICollection<CategoryProduct> categoryProductsToAdd = new HashSet<CategoryProduct>();
+            
+            foreach(var categoryProduct in categoryProducts)
+            {
+                // Right way, but not for judge
+                //if (context.Categories.Find(categoryProduct.CategoryId) == null ||
+                //    context.Products.Find(categoryProduct.ProductId) == null)
+                //{
+                //    continue;
+                //}
+                categoryProductsToAdd.Add(mapper.Map<CategoryProduct>(categoryProduct));
+            }
 
             context.AddRange(categoryProductsToAdd);
             context.SaveChanges();
 
             return $"Successfully imported {categoryProductsToAdd.Count}";
+        }
+
+        // 05. Export Products In Range
+        public static string GetProductsInRange(ProductShopContext context)
+        {
+            var products = context.Products
+                .AsNoTracking()
+                .Where(p => p.Price >= 500 && p.Price <= 1000)
+                .OrderBy(p => p.Price)
+                .ProjectTo<ExportProductsInRangeDto>(mapper.ConfigurationProvider)
+                .ToArray();
+
+            string result = JsonConvert.SerializeObject(products, Formatting.Indented);
+
+            //File.WriteAllText("../../../Results/products-in-range.json", result);
+            return result;
         }
     }
 }
