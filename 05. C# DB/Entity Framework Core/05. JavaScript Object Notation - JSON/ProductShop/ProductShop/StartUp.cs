@@ -20,8 +20,8 @@ namespace ProductShop
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            string inputJson = File.ReadAllText("../../../Datasets/products.json");
-            Console.WriteLine(ImportUsers(context, inputJson));
+            string inputJson = File.ReadAllText("../../../Datasets/categories.json");
+            Console.WriteLine(ImportCategories(context, inputJson));
 
         }
 
@@ -45,7 +45,7 @@ namespace ProductShop
         // 02. Import Products
         public static string ImportProducts(ProductShopContext context, string inputJson)
         {
-            ImportProductsDto[] products = JsonConvert.DeserializeObject<ImportProductsDto[]>(inputJson)!;
+            ImportProductDto[] products = JsonConvert.DeserializeObject<ImportProductDto[]>(inputJson)!;
 
             ICollection<Product> productsToImport = new HashSet<Product>();
             foreach (var product in products)
@@ -57,6 +57,39 @@ namespace ProductShop
             context.SaveChanges();
 
             return $"Successfully imported {products.Length}";
+        }
+
+        // 03. Import Categories
+        public static string ImportCategories(ProductShopContext context, string inputJson)
+        {
+            var categories = JsonConvert.DeserializeObject<ImportCategoryDto[]>(inputJson)!;
+
+            ICollection<Category> categoriesToAdd = new HashSet<Category>();
+            foreach (var category in categories)
+            {
+                if (category.Name != null)
+                {
+                    categoriesToAdd.Add(mapper.Map<Category>(category));
+                }
+            }
+
+            context.Categories.AddRange(categoriesToAdd);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoriesToAdd.Count}";
+        }
+
+        // 04. Import Categories and Products
+        public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
+        {
+            var categoryProducts = JsonConvert.DeserializeObject<ImportCategoryProductDto[]>(inputJson)!;
+
+            ICollection<CategoryProduct> categoryProductsToAdd = mapper.Map<CategoryProduct[]>(categoryProducts);
+
+            context.AddRange(categoryProductsToAdd);
+            context.SaveChanges();
+
+            return $"Successfully imported {categoryProductsToAdd.Count}";
         }
     }
 }
