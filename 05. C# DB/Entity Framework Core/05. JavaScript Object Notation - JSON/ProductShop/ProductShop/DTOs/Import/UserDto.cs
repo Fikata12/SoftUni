@@ -2,7 +2,7 @@
 
 namespace ProductShop.DTOs.Import
 {
-    public class ImportUserDto
+    public class UserDto
     {
         [JsonProperty("firstName")]
         public string? FirstName { get; set; }

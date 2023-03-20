@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProductShop.DTOs.Import
 {
-    public class ImportCategoryDto
+    public class CategoryDto
     {
         [JsonProperty("name")]
         public string Name { get; set; } = null!;

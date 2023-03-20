@@ -23,15 +23,13 @@ namespace ProductShop
             // context.Database.EnsureDeleted();
             // context.Database.EnsureCreated();
 
-            string inputJson = File.ReadAllText("../../../Datasets/categories-products.json");
-            Console.WriteLine(GetProductsInRange(context));
-
+            Console.WriteLine(GetSoldProducts(context));
         }
 
         // 01. Import Users
         public static string ImportUsers(ProductShopContext context, string inputJson)
         {
-            var users = JsonConvert.DeserializeObject<ImportUserDto[]>(inputJson)!;
+            var users = JsonConvert.DeserializeObject<UserDto[]>(inputJson)!;
 
             List<User> usersToAdd = new List<User>();
             foreach (var user in users)
@@ -48,7 +46,7 @@ namespace ProductShop
         // 02. Import Products
         public static string ImportProducts(ProductShopContext context, string inputJson)
         {
-            ImportProductDto[] products = JsonConvert.DeserializeObject<ImportProductDto[]>(inputJson)!;
+            ProductDto[] products = JsonConvert.DeserializeObject<ProductDto[]>(inputJson)!;
 
             ICollection<Product> productsToImport = new HashSet<Product>();
             foreach (var product in products)
@@ -65,7 +63,7 @@ namespace ProductShop
         // 03. Import Categories
         public static string ImportCategories(ProductShopContext context, string inputJson)
         {
-            var categories = JsonConvert.DeserializeObject<ImportCategoryDto[]>(inputJson)!;
+            var categories = JsonConvert.DeserializeObject<CategoryDto[]>(inputJson)!;
 
             ICollection<Category> categoriesToAdd = new HashSet<Category>();
             foreach (var category in categories)
@@ -85,11 +83,11 @@ namespace ProductShop
         // 04. Import Categories and Products
         public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
         {
-            var categoryProducts = JsonConvert.DeserializeObject<ImportCategoryProductDto[]>(inputJson)!;
+            var categoryProducts = JsonConvert.DeserializeObject<CategoryProductDto[]>(inputJson)!;
 
             ICollection<CategoryProduct> categoryProductsToAdd = new HashSet<CategoryProduct>();
-            
-            foreach(var categoryProduct in categoryProducts)
+
+            foreach (var categoryProduct in categoryProducts)
             {
                 // Right way, but not for judge
                 //if (context.Categories.Find(categoryProduct.CategoryId) == null ||
@@ -113,7 +111,7 @@ namespace ProductShop
                 .AsNoTracking()
                 .Where(p => p.Price >= 500 && p.Price <= 1000)
                 .OrderBy(p => p.Price)
-                .ProjectTo<ExportProductsInRangeDto>(mapper.ConfigurationProvider)
+                .ProjectTo<ProductInRangeDto>(mapper.ConfigurationProvider)
                 .ToArray();
 
             string result = JsonConvert.SerializeObject(products, Formatting.Indented);
@@ -121,5 +119,23 @@ namespace ProductShop
             //File.WriteAllText("../../../Results/products-in-range.json", result);
             return result;
         }
+
+        // 06. Export Sold Products
+        public static string GetSoldProducts(ProductShopContext context)
+        {
+            var users = context.Users
+                .AsNoTracking()
+                .Where(u => u.ProductsSold.Count > 0 && u.ProductsSold.Any(p => p.BuyerId != null))
+                .OrderBy(u => u.LastName)
+                .ThenBy(u => u.FirstName)
+                .ProjectTo<UserAndSoldProductsDto>(mapper.ConfigurationProvider)
+                .ToArray();
+
+            string result = JsonConvert.SerializeObject(users, Formatting.Indented);
+
+            //File.WriteAllText("../../../Results/sold-products.json", result);
+            return result;
+        }
+
     }
 }
