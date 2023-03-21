@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProductShop.DTOs.Export
 {
-    public class SoldProductDto
+    public class P06_ProductDto
     {
         [JsonProperty("name")]
         public string Name { get; set; } = null!;

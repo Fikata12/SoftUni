@@ -23,13 +23,13 @@ namespace ProductShop
             // context.Database.EnsureDeleted();
             // context.Database.EnsureCreated();
 
-            Console.WriteLine(GetSoldProducts(context));
+            Console.WriteLine(GetUsersWithProducts(context));
         }
 
         // 01. Import Users
         public static string ImportUsers(ProductShopContext context, string inputJson)
         {
-            var users = JsonConvert.DeserializeObject<UserDto[]>(inputJson)!;
+            var users = JsonConvert.DeserializeObject<DTOs.Import.UserDto[]>(inputJson)!;
 
             List<User> usersToAdd = new List<User>();
             foreach (var user in users)
@@ -46,7 +46,7 @@ namespace ProductShop
         // 02. Import Products
         public static string ImportProducts(ProductShopContext context, string inputJson)
         {
-            ProductDto[] products = JsonConvert.DeserializeObject<ProductDto[]>(inputJson)!;
+            DTOs.Import.ProductDto[] products = JsonConvert.DeserializeObject<DTOs.Import.ProductDto[]>(inputJson)!;
 
             ICollection<Product> productsToImport = new HashSet<Product>();
             foreach (var product in products)
@@ -111,7 +111,7 @@ namespace ProductShop
                 .AsNoTracking()
                 .Where(p => p.Price >= 500 && p.Price <= 1000)
                 .OrderBy(p => p.Price)
-                .ProjectTo<ProductInRangeDto>(mapper.ConfigurationProvider)
+                .ProjectTo<P05_ProductDto>(mapper.ConfigurationProvider)
                 .ToArray();
 
             string result = JsonConvert.SerializeObject(products, Formatting.Indented);
@@ -128,7 +128,7 @@ namespace ProductShop
                 .Where(u => u.ProductsSold.Count > 0 && u.ProductsSold.Any(p => p.BuyerId != null))
                 .OrderBy(u => u.LastName)
                 .ThenBy(u => u.FirstName)
-                .ProjectTo<UserAndSoldProductsDto>(mapper.ConfigurationProvider)
+                .ProjectTo<P06_UserDto>(mapper.ConfigurationProvider)
                 .ToArray();
 
             string result = JsonConvert.SerializeObject(users, Formatting.Indented);
@@ -137,5 +137,37 @@ namespace ProductShop
             return result;
         }
 
+        // 07. Export Categories By Products Count
+        public static string GetCategoriesByProductsCount(ProductShopContext context)
+        {
+            var categories = context.Categories
+                .AsNoTracking()
+                .OrderByDescending(c => c.CategoriesProducts.Count)
+                .ProjectTo<P07_CategoryDto>(mapper.ConfigurationProvider)
+                .ToArray();
+
+            var result = JsonConvert.SerializeObject(categories, Formatting.Indented);
+
+            //File.WriteAllText("../../../Results/categories-aggregated.json", result);
+            return result;
+        }
+
+        // 08. Export Users and Products
+        public static string GetUsersWithProducts(ProductShopContext context)
+        {
+            var users = mapper.Map<P08_UsersDto>(context.Users
+                .Where(u => u.ProductsSold.Any(u => u.Buyer != null))
+                .OrderByDescending(u => u.ProductsSold.Count(u => u.Buyer != null))
+                .ToArray());
+
+            string result = JsonConvert.SerializeObject(users, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                Formatting = Formatting.Indented
+            });
+
+            //File.WriteAllText("../../../Results/users-and-products.json", result);
+            return result;
+        }
     }
 }

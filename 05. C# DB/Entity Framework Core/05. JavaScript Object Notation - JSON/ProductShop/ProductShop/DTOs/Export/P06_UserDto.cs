@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProductShop.DTOs.Export
 {
-    public class UserAndSoldProductsDto
+    public class P06_UserDto
     {
         [JsonProperty("firstName")]
         public string? FirstName { get; set; }
@@ -18,6 +18,6 @@ namespace ProductShop.DTOs.Export
         public string LastName { get; set; } = null!;
 
         [JsonProperty("soldProducts")]
-        public ICollection<SoldProductDto> ProductsSold { get; set; } = null!;
+        public ICollection<P06_ProductDto> ProductsSold { get; set; } = null!;
     }
 }
