@@ -156,8 +156,8 @@ namespace ProductShop
         public static string GetUsersWithProducts(ProductShopContext context)
         {
             var users = mapper.Map<P08_UsersDto>(context.Users
-                .Where(u => u.ProductsSold.Any(u => u.Buyer != null))
-                .OrderByDescending(u => u.ProductsSold.Count(u => u.Buyer != null))
+                .Where(u => u.ProductsSold.Any(u => u.BuyerId != null))
+                .OrderByDescending(u => u.ProductsSold.Count(u => u.BuyerId != null))
                 .ToArray());
 
             string result = JsonConvert.SerializeObject(users, new JsonSerializerSettings
