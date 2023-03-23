@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using ProductShop.Models;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProductShop.DTOs.Export
 {

@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using ProductShop.Models;
 
 namespace ProductShop.DTOs.Export
 {
