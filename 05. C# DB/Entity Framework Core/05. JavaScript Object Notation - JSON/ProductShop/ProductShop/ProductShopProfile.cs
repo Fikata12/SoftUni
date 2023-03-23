@@ -9,10 +9,10 @@ namespace ProductShop
     {
         public ProductShopProfile()
         {
-            CreateMap<UserDto, User>();
-            CreateMap<ProductDto, Product>();
-            CreateMap<CategoryDto, Category>();
-            CreateMap<CategoryProductDto, CategoryProduct>();
+            CreateMap<P01_UserDto, User>();
+            CreateMap<P02_ProductDto, Product>();
+            CreateMap<P03_CategoryDto, Category>();
+            CreateMap<P04_CategoryProductDto, CategoryProduct>();
             CreateMap<Product, P05_ProductDto>()
                 .ForMember(d => d.ProductName,
                          opt => opt.MapFrom(s => s.Name))
@@ -41,9 +41,9 @@ namespace ProductShop
             CreateMap<User, P08_UserDto>();
             CreateMap<ICollection<Product>, P08_ProductsDto>()
                 .ForMember(d => d.ProductsCount, 
-                         opt => opt.MapFrom(s => s.Count))
+                         opt => opt.MapFrom(s => s.Count(p => p.BuyerId != null)))
                 .ForMember(d => d.Products, 
-                         opt  => opt.MapFrom(s => s));
+                         opt  => opt.MapFrom(s => s.Where(p => p.BuyerId != null)));
             CreateMap<Product, P08_ProductDto>();
         }
     }

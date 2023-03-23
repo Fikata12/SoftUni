@@ -2,7 +2,7 @@
 
 namespace ProductShop.DTOs.Import
 {
-    public class CategoryProductDto
+    public class P04_CategoryProductDto
     {
         [JsonProperty("CategoryId")]
         public int CategoryId { get; set; }

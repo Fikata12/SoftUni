@@ -18,18 +18,13 @@ namespace ProductShop
 
         public static void Main()
         {
-            ProductShopContext context = new ProductShopContext();
 
-            // context.Database.EnsureDeleted();
-            // context.Database.EnsureCreated();
-
-            Console.WriteLine(GetUsersWithProducts(context));
         }
 
         // 01. Import Users
         public static string ImportUsers(ProductShopContext context, string inputJson)
         {
-            var users = JsonConvert.DeserializeObject<DTOs.Import.UserDto[]>(inputJson)!;
+            var users = JsonConvert.DeserializeObject<P01_UserDto[]>(inputJson)!;
 
             List<User> usersToAdd = new List<User>();
             foreach (var user in users)
@@ -46,7 +41,7 @@ namespace ProductShop
         // 02. Import Products
         public static string ImportProducts(ProductShopContext context, string inputJson)
         {
-            DTOs.Import.ProductDto[] products = JsonConvert.DeserializeObject<DTOs.Import.ProductDto[]>(inputJson)!;
+            var products = JsonConvert.DeserializeObject<P02_ProductDto[]>(inputJson)!;
 
             ICollection<Product> productsToImport = new HashSet<Product>();
             foreach (var product in products)
@@ -63,7 +58,7 @@ namespace ProductShop
         // 03. Import Categories
         public static string ImportCategories(ProductShopContext context, string inputJson)
         {
-            var categories = JsonConvert.DeserializeObject<CategoryDto[]>(inputJson)!;
+            var categories = JsonConvert.DeserializeObject<P03_CategoryDto[]>(inputJson)!;
 
             ICollection<Category> categoriesToAdd = new HashSet<Category>();
             foreach (var category in categories)
@@ -83,7 +78,7 @@ namespace ProductShop
         // 04. Import Categories and Products
         public static string ImportCategoryProducts(ProductShopContext context, string inputJson)
         {
-            var categoryProducts = JsonConvert.DeserializeObject<CategoryProductDto[]>(inputJson)!;
+            var categoryProducts = JsonConvert.DeserializeObject<P04_CategoryProductDto[]>(inputJson)!;
 
             ICollection<CategoryProduct> categoryProductsToAdd = new HashSet<CategoryProduct>();
 
@@ -157,7 +152,7 @@ namespace ProductShop
         {
             var users = mapper.Map<P08_UsersDto>(context.Users
                 .Where(u => u.ProductsSold.Any(u => u.BuyerId != null))
-                .OrderByDescending(u => u.ProductsSold.Count(u => u.BuyerId != null))
+                .OrderByDescending(u => u.ProductsSold.Count(p => p.BuyerId != null))
                 .ToArray());
 
             string result = JsonConvert.SerializeObject(users, new JsonSerializerSettings
