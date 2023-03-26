@@ -12,6 +12,7 @@ namespace ProductShop
         {
             cfg.AddProfile<ProductShopProfile>();
         }));
+
         static T Deserialize<T>(string inputXml)
         {
             string? rootName = string.Concat(inputXml.Split("\n").Last().Skip(2).SkipLast(1));
@@ -20,6 +21,7 @@ namespace ProductShop
 
             return (T)serializer.Deserialize(new StringReader(inputXml))!;
         }
+
         public static void Main()
         {
             ProductShopContext context = new ProductShopContext();
