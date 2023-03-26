@@ -1,4 +1,6 @@
-﻿namespace CarDealer.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace CarDealer.Models
 {
     public class Car
     {
@@ -8,7 +10,8 @@
 
         public string Model { get; set; } = null!;
 
-        public long TravelledDistance { get; set; }
+        [Column("TravelledDistance")]
+        public long TraveledDistance { get; set; }
 
         public virtual ICollection<Sale> Sales { get; set; } = new List<Sale>();
 

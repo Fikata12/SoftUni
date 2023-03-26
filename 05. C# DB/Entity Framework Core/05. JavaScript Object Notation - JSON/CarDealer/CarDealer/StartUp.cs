@@ -17,7 +17,7 @@ namespace CarDealer
             cfg.AddProfile<CarDealerProfile>();
         }));
 
-        public static void Main() { }
+        public static void Main() { Console.WriteLine(GetTotalSalesByCustomer(new CarDealerContext())); }
 
         // 09. Import Suppliers
         public static string ImportSuppliers(CarDealerContext context, string inputJson)
@@ -134,13 +134,13 @@ namespace CarDealer
                 .AsNoTracking()
                 .Where(c => c.Make == "Toyota")
                 .OrderBy(c => c.Model)
-                .ThenByDescending(c => c.TravelledDistance)
+                .ThenByDescending(c => c.TraveledDistance)
                 .Select(c => new
                 {
                     c.Id,
                     c.Make,
                     c.Model,
-                    TraveledDistance = c.TravelledDistance
+                    c.TraveledDistance
                 })
                 .ToArray();
 
@@ -169,7 +169,7 @@ namespace CarDealer
             return result;
         }
 
-        //17. Export Cars With Their List Of Parts "Compile time error"
+        //17. Export Cars With Their List Of Parts
         public static string GetCarsWithTheirListOfParts(CarDealerContext context)
         {
             var cars = context.Cars
@@ -179,7 +179,7 @@ namespace CarDealer
                     {
                         c.Make,
                         c.Model,
-                        TraveledDistance = c.TravelledDistance
+                        c.TraveledDistance
                     },
                     parts = c.PartsCars
                     .Select(pc => new
@@ -197,12 +197,11 @@ namespace CarDealer
             return result;
         }
 
-        //18. Export Total Sales By Customer "Compile time error"
+        //18. Export Total Sales By Customer
         public static string GetTotalSalesByCustomer(CarDealerContext context)
         {
             var customers = context.Customers
                 .Where(c => c.Sales.Count > 0)
-                .ToArray()
                 .Select(c => new
                 {
                     fullName = c.Name,
@@ -210,7 +209,8 @@ namespace CarDealer
                     spentMoney = c.Sales.Sum(s => s.Car.PartsCars.Sum(pc => pc.Part.Price))
                 })
                 .OrderByDescending(c => c.spentMoney)
-                .ThenByDescending(c => c.boughtCars);
+                .ThenByDescending(c => c.boughtCars)
+                .ToArray();
 
             string result = JsonConvert.SerializeObject(customers, Formatting.Indented);
             //File.WriteAllText("../../../Results/customer-sales.json", result);
@@ -218,7 +218,7 @@ namespace CarDealer
             return result;
         }
 
-        //19. Export Sales With Applied Discount "Compile time error"
+        //19. Export Sales With Applied Discount
         public static string GetSalesWithAppliedDiscount(CarDealerContext context)
         {
             var sales = context.Sales
@@ -229,7 +229,7 @@ namespace CarDealer
                     {
                         s.Car.Make,
                         s.Car.Model,
-                        TraveledDistance = s.Car.TravelledDistance
+                        s.Car.TraveledDistance
                     },
                     customerName = s.Customer.Name,
                     discount = s.Discount,
