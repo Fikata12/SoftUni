@@ -25,6 +25,7 @@ namespace ProductShop
             ProductShopContext context = new ProductShopContext();
 
             string inputXml = File.ReadAllText("../../../Datasets/users.xml");
+
             Console.WriteLine(ImportUsers(context, inputXml));
         }
 
