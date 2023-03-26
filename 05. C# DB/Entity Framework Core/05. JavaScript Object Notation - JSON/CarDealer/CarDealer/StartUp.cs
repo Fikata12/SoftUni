@@ -17,15 +17,7 @@ namespace CarDealer
             cfg.AddProfile<CarDealerProfile>();
         }));
 
-        public static void Main()
-        {
-            CarDealerContext context = new CarDealerContext();
-
-            //context.Database.EnsureDeleted();
-            //context.Database.EnsureCreated();
-
-            Console.WriteLine(GetSalesWithAppliedDiscount(context));
-        }
+        public static void Main() { }
 
         // 09. Import Suppliers
         public static string ImportSuppliers(CarDealerContext context, string inputJson)
