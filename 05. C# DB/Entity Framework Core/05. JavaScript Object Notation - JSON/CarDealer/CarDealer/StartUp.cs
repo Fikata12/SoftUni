@@ -5,6 +5,7 @@ using CarDealer.Models;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 using System.Globalization;
 
 namespace CarDealer
@@ -23,7 +24,7 @@ namespace CarDealer
             //context.Database.EnsureDeleted();
             //context.Database.EnsureCreated();
 
-            Console.WriteLine(GetCarsFromMakeToyota(context));
+            Console.WriteLine(GetSalesWithAppliedDiscount(context));
         }
 
         // 09. Import Suppliers
@@ -134,27 +135,127 @@ namespace CarDealer
             return result;
         }
 
-        //15. Export Cars From Make Toyota
+        //15. Export Cars From Make Toyota 0/100
         public static string GetCarsFromMakeToyota(CarDealerContext context)
         {
-                var cars = context.Cars
-                    .AsNoTracking()
-                    .Where(c => c.Make == "Toyota")
-                    .OrderBy(c => c.Model)
-                    .ThenByDescending(c => c.TravelledDistance)
-                    .Select(c => new
+            var cars = context.Cars
+                .AsNoTracking()
+                .Where(c => c.Make == "Toyota")
+                .OrderBy(c => c.Model)
+                .ThenByDescending(c => c.TravelledDistance)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Make,
+                    c.Model,
+                    TraveledDistance = c.TravelledDistance
+                })
+                .ToArray();
+
+            string result = JsonConvert.SerializeObject(cars, Formatting.Indented);
+
+            //File.WriteAllText("../../../Results/cars-from-toyota.json", result);
+            return result;
+        }
+
+        //16. Export Local Suppliers
+        public static string GetLocalSuppliers(CarDealerContext context)
+        {
+            var suppliers = context.Suppliers
+                .Where(s => s.IsImporter == false)
+                .Select(s => new
+                {
+                    s.Id,
+                    s.Name,
+                    PartsCount = s.Parts.Count
+                })
+                .ToArray();
+
+            string result = JsonConvert.SerializeObject(suppliers, Formatting.Indented);
+
+            //File.WriteAllText("../../../Results/local-supliers.json", result);
+            return result;
+        }
+
+        //17. Export Cars With Their List Of Parts "Compile time error"
+        public static string GetCarsWithTheirListOfParts(CarDealerContext context)
+        {
+            var cars = context.Cars
+                .Select(c => new
+                {
+                    car = new
                     {
-                        c.Id,
                         c.Make,
                         c.Model,
                         TraveledDistance = c.TravelledDistance
+                    },
+                    parts = c.PartsCars
+                    .Select(pc => new
+                    {
+                        pc.Part.Name,
+                        Price = pc.Part.Price.ToString("f2")
                     })
-                    .ToArray();
+                    .ToArray()
+                })
+                .ToArray();
 
-                string result = JsonConvert.SerializeObject(cars, Formatting.Indented);
+            string result = JsonConvert.SerializeObject(cars, Formatting.Indented);
 
-                //File.WriteAllText("../../../Results/cars-from-toyota.json", result);
-                return result;
+            //File.WriteAllText("../../../Results/cars-with-their-parts.json", result);
+            return result;
+        }
+
+        //18. Export Total Sales By Customer "Compile time error"
+        public static string GetTotalSalesByCustomer(CarDealerContext context)
+        {
+            var customers = context.Customers
+                .Where(c => c.Sales.Count > 0)
+                .ToArray()
+                .Select(c => new
+                {
+                    fullName = c.Name,
+                    boughtCars = c.Sales.Count,
+                    spentMoney = c.Sales.Sum(s => s.Car.PartsCars.Sum(pc => pc.Part.Price))
+                })
+                .OrderByDescending(c => c.spentMoney)
+                .ThenByDescending(c => c.boughtCars);
+
+            string result = JsonConvert.SerializeObject(customers, Formatting.Indented);
+            //File.WriteAllText("../../../Results/customer-sales.json", result);
+
+            return result;
+        }
+
+        //19. Export Sales With Applied Discount "Compile time error"
+        public static string GetSalesWithAppliedDiscount(CarDealerContext context)
+        {
+            var sales = context.Sales
+                .Take(10)
+                .Select(s => new
+                {
+                    car = new
+                    {
+                        s.Car.Make,
+                        s.Car.Model,
+                        TraveledDistance = s.Car.TravelledDistance
+                    },
+                    customerName = s.Customer.Name,
+                    discount = s.Discount,
+                    price = s.Car.PartsCars.Sum(pc => pc.Part.Price)
+                })
+                .Select(s => new
+                {
+                    s.car,
+                    s.customerName,
+                    discount = s.discount.ToString("f2"),
+                    price = s.price.ToString("f2"),
+                    priceWithDiscount = (s.price - s.discount / 100 * s.price).ToString("f2")
+                })
+                .ToArray();
+
+            string result = JsonConvert.SerializeObject(sales, Formatting.Indented);
+
+            return result;
         }
     }
 }
