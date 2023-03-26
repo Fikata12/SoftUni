@@ -17,7 +17,7 @@ namespace CarDealer
             cfg.AddProfile<CarDealerProfile>();
         }));
 
-        public static void Main() { Console.WriteLine(GetTotalSalesByCustomer(new CarDealerContext())); }
+        public static void Main() { }
 
         // 09. Import Suppliers
         public static string ImportSuppliers(CarDealerContext context, string inputJson)
