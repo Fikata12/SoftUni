@@ -12,13 +12,6 @@ namespace ProductShop
         {
             cfg.AddProfile<ProductShopProfile>();
         }));
-        public static void Main()
-        {
-            ProductShopContext context = new ProductShopContext();
-
-            string inputXml = File.ReadAllText("../../../Datasets/users.xml");
-            Console.WriteLine(ImportUsers(context, inputXml));
-        }
         static T Deserialize<T>(string inputXml)
         {
             string? rootName = string.Concat(inputXml.Split("\n").Last().Skip(2).SkipLast(1));
@@ -26,6 +19,13 @@ namespace ProductShop
             XmlSerializer serializer = new XmlSerializer(typeof(T), new XmlRootAttribute(rootName));
 
             return (T)serializer.Deserialize(new StringReader(inputXml))!;
+        }
+        public static void Main()
+        {
+            ProductShopContext context = new ProductShopContext();
+
+            string inputXml = File.ReadAllText("../../../Datasets/users.xml");
+            Console.WriteLine(ImportUsers(context, inputXml));
         }
 
         //01. Import Users
