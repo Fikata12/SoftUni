@@ -155,7 +155,6 @@ namespace CarDealer
 
                 //File.WriteAllText("../../../Results/cars-from-toyota.json", result);
                 return result;
-            }
         }
     }
 }
