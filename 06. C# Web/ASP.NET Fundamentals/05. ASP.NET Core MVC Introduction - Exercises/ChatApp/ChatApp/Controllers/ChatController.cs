@@ -30,6 +30,7 @@ namespace ChatApp.Controllers
 			return View(chatModel);
 		}
 
+		[HttpPost]
 		public IActionResult Send(ChatViewModel chat)
 		{
 			var newMessage = chat.CurrentMessage;
