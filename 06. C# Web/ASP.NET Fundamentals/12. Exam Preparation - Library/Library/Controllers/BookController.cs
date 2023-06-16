@@ -129,21 +129,22 @@ namespace Library.Controllers
         public async Task<IActionResult> AddToCollection(int id)
         {
             var book = await context.Books
+                .Where(b => b.Id == id)
                 .Include(b => b.UsersBooks)
-                .FirstOrDefaultAsync(b => b.Id == id);
+                .FirstOrDefaultAsync();
 
             if (book == null)
             {
-                RedirectToAction("All");
+                return RedirectToAction("All");
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (book!.UsersBooks.FirstOrDefault(ub => ub.CollectorId == userId) != null)
             {
-                RedirectToAction("All");
+                return RedirectToAction("All");
             }
 
-            await context.UsersBooks.AddAsync(new IdentityUserBook
+            book.UsersBooks.Add(new IdentityUserBook
             {
                 CollectorId = userId,
                 BookId = book.Id
@@ -162,7 +163,7 @@ namespace Library.Controllers
 
             if (book == null)
             {
-                RedirectToAction("Mine");
+                return RedirectToAction("Mine");
             }
 
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -170,7 +171,7 @@ namespace Library.Controllers
 
             if (userBook == null)
             {
-                RedirectToAction("Mine");
+                return RedirectToAction("Mine");
             }
 
             context.UsersBooks.Remove(userBook!);
