@@ -1,6 +1,6 @@
 ﻿namespace Library.Models
 {
-	public class BookAllViewModel
+	public class AllViewModel
 	{
 		public int Id { get; set; }
 
