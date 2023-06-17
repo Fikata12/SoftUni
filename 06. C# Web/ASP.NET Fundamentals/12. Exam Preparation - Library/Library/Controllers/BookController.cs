@@ -22,7 +22,7 @@ namespace Library.Controllers
         {
             var books = await context.Books
                 .AsNoTracking()
-                .Select(b => new BookAllViewModel
+                .Select(b => new AllViewModel
                 {
                     Id = b.Id,
                     Title = b.Title,
