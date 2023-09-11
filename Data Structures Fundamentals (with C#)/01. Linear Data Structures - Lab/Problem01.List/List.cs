@@ -90,15 +90,18 @@
                 throw new IndexOutOfRangeException(nameof(index));
             }
 
-            var copyArray = new T[Count + 1];
+            if (Count == items.Length)
+            {
+                Grow();
+            }
 
-            Array.Copy(items, copyArray, index);
+            for (int i = Count; i > index; i--)
+            {
+                items[i] = items[i - 1];
+            }
 
-            copyArray[index] = item;
+            items[index] = item;
 
-            Array.Copy(items, index, copyArray, index + 1, Count - index);
-
-            items = copyArray;
             Count++;
         }
 
@@ -109,16 +112,24 @@
                 return false;
             }
 
-            var copyArray = new T[Count - 1];
-
             for (int i = 0; i < Count; i++)
             {
                 if (items[i].Equals(item))
                 {
-                    Array.Copy(items, copyArray, i);
-                    Array.Copy(items, i + 1, copyArray, i, Count - 1 - i);
-                    items = copyArray;
+                    for (int j = i; j < Count; j++)
+                    {
+                        items[j] = items[j + 1];
+                    }
+
+                    items[Count] = default;
+
                     Count--;
+
+                    if (Count < items.Length / 2)
+                    {
+                        Shrink();
+                    }
+
                     break;
                 }
             }
@@ -135,7 +146,10 @@
 
             Array.Copy(items, copyArray, index);
             Array.Copy(items, index + 1, copyArray, index, Count - 1 - index);
-            items = copyArray;
+
+            Array.Clear(items, 0, Count);
+            Array.Copy(copyArray, items, copyArray.Length);
+
             Count--;
         }
 
@@ -154,12 +168,18 @@
 
         void Grow()
         {
-            var itemsCopy = new T[Count * 2];
+            var itemsCopy = new T[items.Length * 2];
 
-            for (int i = 0; i < Count; i++)
-            {
-                itemsCopy[i] = items[i];
-            }
+            Array.Copy(items, itemsCopy, items.Length);
+
+            items = itemsCopy;
+        }
+
+        void Shrink()
+        {
+            var itemsCopy = new T[items.Length / 2];
+
+            Array.Copy(items, itemsCopy, Count);
 
             items = itemsCopy;
         }
