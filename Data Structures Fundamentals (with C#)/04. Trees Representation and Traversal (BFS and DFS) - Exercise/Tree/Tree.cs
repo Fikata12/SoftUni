@@ -121,19 +121,16 @@
             return stack.Select(e => e.Key);
         }
 
-        private void TreeAsStringBuilder(Tree<T> tree, StringBuilder sb, int spaceCounter)
+        private void TreeAsStringBuilder(Tree<T> tree, StringBuilder sb, int level)
         {
-            for (int i = 0; i < spaceCounter * 2; i++)
-            {
-                sb.Append(" ");
-            }
+            sb.Append(' ', level * 2)
+                .AppendLine(tree.Key.ToString());
 
-            sb.AppendLine(tree.Key.ToString());
+            level++;
 
-            spaceCounter++;
             foreach (var item in tree.Children)
             {
-                TreeAsStringBuilder(item, sb, spaceCounter);
+                TreeAsStringBuilder(item, sb, level);
             }
         }
 
