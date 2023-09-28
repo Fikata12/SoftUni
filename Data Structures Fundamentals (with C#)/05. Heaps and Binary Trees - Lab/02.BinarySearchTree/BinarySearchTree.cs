@@ -12,7 +12,14 @@
         }
         private BinarySearchTree(Node node)
         {
-            root = node;
+            PreOrderCopy(node);
+        }
+
+        private void PreOrderCopy(Node node)
+        {
+            Insert(node.Value);
+            PreOrderCopy(node.Left);
+            PreOrderCopy(node.Right);
         }
 
         public bool Contains(T element)
