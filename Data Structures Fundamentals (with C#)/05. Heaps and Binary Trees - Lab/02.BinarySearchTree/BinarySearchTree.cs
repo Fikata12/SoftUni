@@ -17,6 +17,11 @@
 
         private void PreOrderCopy(Node node)
         {
+            if (node == null)
+            {
+                return;
+            }
+
             Insert(node.Value);
             PreOrderCopy(node.Left);
             PreOrderCopy(node.Right);
