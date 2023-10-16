@@ -1,0 +1,26 @@
+* {
+    box-sizing: border-box;
+    font-family: sans-serif;
+}
+
+body {
+    padding: 0 5em;
+}
+
+.header {
+    display: flex;
+    border-bottom: 2px solid black;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header ul {
+    display: flex;
+    list-style: none;
+    gap: 2em;
+}
+
+.header a {
+    color: rgb(0, 153, 0);
+    text-decoration: none;
+}
