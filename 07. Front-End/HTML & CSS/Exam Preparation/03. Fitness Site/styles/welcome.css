@@ -1,0 +1,13 @@
+.welcome-img-container {
+    width: 3em;
+    height: auto;
+}
+
+.articles article p {
+    max-width: 35ch;
+}
+
+.welcome .articles {
+    justify-content: center;
+    gap: 4em;
+}

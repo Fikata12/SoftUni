@@ -1,0 +1,22 @@
+.coaches {
+    background-color: #efefef;
+}
+
+.coaches-img-container {
+    max-width: 16em;
+    height: auto;
+}
+
+.coaches-img-container img {
+    border-radius: 0.3em;
+}
+
+.coaches .articles {
+    justify-content: center;
+    gap: 10em;
+}
+
+.coaches .articles article p {
+    max-width: 30ch;
+    color: #a5a5a5;
+}

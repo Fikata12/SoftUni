@@ -1,0 +1,67 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+article {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.site-header, .banner, .welcome, 
+.coaches, .site-footer{
+    display: flex;
+    justify-content: center;
+}
+
+.container {
+    max-width: 80em;
+    width: 100%;
+    padding-inline: 2em;
+}
+
+/* welcome and coaches */
+
+.welcome .container,
+.coaches .container {
+    display: flex;
+    flex-direction: column;
+    padding-top: 2em;
+    padding-bottom: 3em;
+}
+
+.articles {
+    display: flex;
+    text-align: center;
+    flex-wrap: wrap;
+}
+
+/* welcome and coaches */
+
+
+/* red underline */
+
+.welcome h1,
+.coaches h1 {
+    text-align: center;
+    padding-bottom: 1.5em;
+    font-size: 1.6em;
+}
+
+.welcome h1::after,
+.coaches h1::after {
+    display: block;
+    content: '';
+    width: 1.4em;
+    height: 0.1em;
+    background-color: #d0191d;
+    margin: 0.7em auto 0 auto;
+}
+
+/* red underline */
