@@ -1,0 +1,69 @@
+@media (max-width: 600px)
+{
+    /* shop by category */
+    .home-header {
+        padding: 1em;
+    }
+    .home-navbar1 {
+        display: none;
+    }
+
+    .home-cards-container {
+        gap: 1em;
+    }
+    .category-card-category-card {
+        flex: 1 1 40%;
+    }
+    .category-card-image {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1/1;
+    }
+
+
+    /* bookStore */
+    .home-full-width-banner {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .home-left4 {
+        padding-block: 2em;
+    }
+
+    .home-content {
+        margin-bottom: 1em;
+        padding-inline: 1.7em;
+    }
+
+    .home-text30 {
+        width: auto;
+    }
+
+    .home-image6 {
+        width: 100%;
+    }
+
+    /* our store */
+    .blog-post-card-blog-post-card {
+        max-width: 100%;
+    }
+
+    /* footer */
+    .home-footer1 {
+        flex-direction: column;
+        padding-block: 2em;
+    }
+
+    .home-links-container {
+        flex-direction: column;
+    }
+
+    .home-container09 {
+        order: 2;
+    }
+
+    .home-links-container {
+        padding-bottom: 2em;
+    }
+}

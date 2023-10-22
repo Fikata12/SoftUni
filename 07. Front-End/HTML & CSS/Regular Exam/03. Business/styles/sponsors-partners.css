@@ -1,0 +1,33 @@
+.sponsors-partners .container {
+    max-width: 64.6em;
+    display: flex;
+    color: #886567;
+    gap: 2em;
+    align-items: center;
+    padding-block: 3em;
+    flex-direction: column;
+    text-align: center;
+}
+
+.sponsors-partners h2 {
+    font-size: 2.5em;
+    color: #b0825c;
+    margin-bottom: 0.5em;
+}
+
+.sponsors-partners p {
+    font-size: 0.9em;
+}
+
+.sponsors-partners-images {
+    display:  flex;
+    gap: 4em;
+}
+
+.sponsors-partners-image-container {
+    max-width: 8em;
+    max-height: 8em;
+    background-color: #dddddd;
+    border-radius: 50em;
+    padding: 1.3em;
+}

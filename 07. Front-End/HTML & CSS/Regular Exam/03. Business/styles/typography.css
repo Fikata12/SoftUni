@@ -1,0 +1,31 @@
+@import url(https://fonts.googleapis.com/css?family=PT+Serif);
+
+@import url(https://fonts.googleapis.com/css?family=PT+Sans:400,700);
+
+html {
+    font-family: 'PT Sans';
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'PT Serif';
+    font-weight: lighter;
+}
+
+img {
+    height: auto;
+    width: 100%;
+}
+
+li {
+    list-style: none;
+}
+li a {
+    text-transform: uppercase;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
