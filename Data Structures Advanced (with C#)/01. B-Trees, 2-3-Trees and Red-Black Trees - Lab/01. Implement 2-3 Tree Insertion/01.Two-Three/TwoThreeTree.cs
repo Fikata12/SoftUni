@@ -88,14 +88,14 @@
                 return newNode;
             }
             else if (IsLess(node.LeftKey, current.RightKey))
-            {
+            { 
                 node.MiddleChild = new TreeNode<T>(current.RightKey)
                 {
                     LeftChild = node.MiddleChild,
                     MiddleChild = current.RightChild
                 };
 
-                current.LeftChild = current;
+                node.LeftChild = current;
                 current.RightKey = default;
                 current.RightChild = null;
 
@@ -106,7 +106,7 @@
                 var newNode = new TreeNode<T>(current.RightKey)
                 {
                     LeftChild = current,
-                    MiddleChild = current
+                    MiddleChild = node
                 };
 
                 node.LeftChild = current.RightChild;
